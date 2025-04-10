@@ -1,0 +1,5 @@
+ISBN,bookType,bookTitle,authorName,category,status
+123456,STANDARD,The Great Book,Jane Doe,Fiction,Available
+654321,STANDARD,Learning Java,John Smith,Education,Available
+,ILLEGAL,The Banned Tome,Evil Writer,Dark Arts,Available
+,ILLEGAL,Hidden Writings,Anonymous,Secret,Unavailable
