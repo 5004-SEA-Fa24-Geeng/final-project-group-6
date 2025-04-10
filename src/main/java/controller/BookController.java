@@ -1,8 +1,6 @@
 package controller;
 
 import model.IBook;
-import model.IllegalBook;
-import model.StandardBook;
 
 import java.util.Collection;
 import java.util.Scanner;
