@@ -12,7 +12,7 @@ public final class Sorts {
      * @param ascending In ascending or descending order.
      * @return A comparator to sort the books.
      */
-    public static Comparator<InsertBookClass> getSorting(BookData bookData, boolean ascending) {
+    public static Comparator<InsertBookClass> getSorting(BookDataSabrina bookData, boolean ascending) {
         switch (bookData) {
             case TITLE:
                 return (o1, o2) -> {

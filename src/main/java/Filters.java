@@ -4,7 +4,7 @@ public final class Filters {
      */
     private Filters() {}
 
-    public static boolean filter(InsertBookClass book, BookData column, Operations op, String value) {
+    public static boolean filter(InsertBookClass book, BookDataSabrina column, Operations op, String value) {
         switch (column) {
             case CATEGORY:
                 //getCategory might not exist in our implementation or be different. Placeholder for now

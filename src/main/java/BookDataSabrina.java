@@ -1,7 +1,7 @@
 /**
  * Enum to represent the columns in the book data.
  */
-public enum BookData {
+public enum BookDataSabrina {
     /**
      * Enums to filter by
      */
@@ -13,7 +13,7 @@ public enum BookData {
      * The constructor for BookData
      * @param columnName The name of the column in the CSV file.
      */
-    BookData(String columnName) {
+    BookDataSabrina(String columnName) {
         this.columnName = columnName;
     }
 
@@ -30,8 +30,8 @@ public enum BookData {
      * @param columnName The name of the column in the CSV file.
      * @return the enum that matches the column name.
      */
-    public static BookData fromColumnName(String columnName) {
-        for (BookData bookData : BookData.values()) {
+    public static BookDataSabrina fromColumnName(String columnName) {
+        for (BookDataSabrina bookData : BookDataSabrina.values()) {
             if (bookData.getColumnName().equals(columnName)) {
                 return bookData;
             }
@@ -39,8 +39,8 @@ public enum BookData {
         throw new IllegalArgumentException("Invalid column name: " + columnName);
     }
 
-    public static BookData fromString(String name) {
-        for (BookData bookData : BookData.values()) {
+    public static BookDataSabrina fromString(String name) {
+        for (BookDataSabrina bookData : BookDataSabrina.values()) {
             if (bookData.getColumnName().equalsIgnoreCase(name) || bookData.name().equalsIgnoreCase(name)) {
                 return bookData;
             }
