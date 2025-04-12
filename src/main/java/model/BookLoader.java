@@ -22,10 +22,26 @@ public class BookLoader {
      */
     private BookLoader() {}
 
+
+    /**
+     *
+     * @param standardBookFile
+     * @param illegalBookFile
+     * @return
+     */
+    public static Set<IBook> loadBooks(String standardBookFile, String illegalBookFile){
+
+        Set<IBook> combinedBookSet = new HashSet<>();
+        for(String file: new String[]{standardBookFile, illegalBookFile}){
+            combinedBookSet.addAll(loadBooksFromFile(file));
+        }
+        return combinedBookSet;
+
+    }
     /**
      * loads books file from csv file to a set of Book objects.
      */
-    public static Set<IBook> loadBooks(String filename) {
+    public static Set<IBook> loadBooksFromFile(String filename) {
 
         Set<IBook> books = new HashSet<>();
         List<String> lines;
@@ -95,7 +111,7 @@ public class BookLoader {
     private static IBook toStandardBook(String[] columns, Map<BookData, Integer> columnMap){
 
         try{
-            IBook book = new StandardBook(Integer.parseInt(columns[columnMap.get(BookData.ISBN)]),
+            IBook book = new StandardBook(columns[columnMap.get(BookData.ISBN)],
                     columns[columnMap.get(BookData.TITLE)],
                     columns[columnMap.get(BookData.AUTHOR)],
                     columns[columnMap.get(BookData.CATEGORY)],
@@ -117,7 +133,9 @@ public class BookLoader {
     private static IBook toIllegalBook(String[] columns, Map<BookData, Integer> columnMap){
 
         try{
-            IBook book = new IllegalBook(columns[columnMap.get(BookData.TITLE)],
+            IBook book = new IllegalBook(
+                    columns[columnMap.get(BookData.ISBN)],
+                    columns[columnMap.get(BookData.TITLE)],
                     columns[columnMap.get(BookData.AUTHOR)],
                     columns[columnMap.get(BookData.CATEGORY)],
                     columns[columnMap.get(BookData.STATUS)]);

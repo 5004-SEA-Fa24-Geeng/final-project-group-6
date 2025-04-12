@@ -1,6 +1,7 @@
 package model;
 
 public interface IBook {
+    String getBookType();
     String getBookTitle();
     String getAuthor();
     String getCategory();

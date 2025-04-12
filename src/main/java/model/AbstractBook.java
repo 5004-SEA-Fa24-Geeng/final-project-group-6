@@ -5,8 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public abstract class AbstractBook implements IBook {
 
     /** variable for isbn. */
-    protected Integer isbn;
-
+    protected String isbn;
 
     /** variable for bookTitle */
     private String bookTitle;
@@ -18,7 +17,7 @@ public abstract class AbstractBook implements IBook {
     private String category;
 
     /** variable for bookType. */
-    protected BookType bookType;
+    protected String bookType;
 
     /** variable for status. */
     private String status;
@@ -31,7 +30,7 @@ public abstract class AbstractBook implements IBook {
      * @param category book category.
      * @param status book status.
      */
-    public AbstractBook(Integer isbn, BookType bookType, String bookTitle, String author, String category, String status) {
+    public AbstractBook(String isbn, String bookType, String bookTitle, String author, String category, String status) {
         this.isbn = isbn;
         this.bookType = bookType;
         this.bookTitle = bookTitle;
@@ -40,36 +39,68 @@ public abstract class AbstractBook implements IBook {
         this.status = status;
     }
 
+    /**
+     *
+     * @return book type.
+     */
     @Override
     public String getBookType(){
-        return this.bookType.name();
+        return this.bookType;
     }
 
 
+    /**
+     *
+     * @return book Title.
+     */
     @Override
     public String getBookTitle() {
         return bookTitle;
     }
+
+    /**
+     *
+     * @return author.
+     */
 
     @Override
     public String getAuthor() {
         return author;
     }
 
+    /**
+     *
+     * @return book category.
+     */
     @Override
     public String getCategory() {
         return category;
     }
 
+
+    /**
+     *
+     * @return isbn.
+     */
     @Override
-    public int getISBN() {
+    public String getISBN() {
         return isbn;
     }
+
+    /**
+     *
+     * @return book status.
+     */
 
     @Override
     public String getStatus() {
         return status;
     }
+
+    /**
+     *
+     * @param status set book status.
+     */
 
     @Override
     public void setStatus(String status){
@@ -86,14 +117,15 @@ public abstract class AbstractBook implements IBook {
         return String.format("[ILLEGAL] %s by %s (%s) - ISBN: %s", bookTitle, author, category, isbn);
     }
 
-    /**
-     *
-     * @return book data as a string for csv file.
-     */
+
     @Override
-    public String toCSV(){
-        return String.format("%d,%s,%s,%s,%s", this.getISBN(), this.getBookTitle(), this.getAuthor(), this.getCategory(), this.getStatus());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        IBook book = (IBook) obj;
+        return this.getISBN().equalsIgnoreCase(book.getISBN());
     }
+
 
     public int hashcode(Object obj){
         return HashCodeBuilder.reflectionHashCode(this,"status");
@@ -101,4 +133,4 @@ public abstract class AbstractBook implements IBook {
 
 
     }
-}
+

@@ -1,8 +1,10 @@
 package model;
 
+
 public class IllegalBook extends AbstractBook {
 
 
+    protected String PASSWORD = "secret";
 
     /**
      *
@@ -12,8 +14,8 @@ public class IllegalBook extends AbstractBook {
      * @param category book category.
      * @param status book status.
      */
-    public IllegalBook(String bookTitle, String author, String category, String status) {
-        super(null,BookType.ILLEGAL, bookTitle, author, category, status);
+    public IllegalBook(String isbn, String bookTitle, String author, String category, String status) {
+        super(isbn,"ILLEGAL", bookTitle, author, category, status);
     }
 
     /**
@@ -24,13 +26,24 @@ public class IllegalBook extends AbstractBook {
     public String toString() {
         return String.format("[ILLEGAL] %s by %s (%s)", getBookTitle(), getAuthor(), getCategory());
     }
-    /**
-     *
-     * @return csv line with book information.
-     */
-    @Override
-    public String toCSV(){
-        return String.format("%s,%s,%s,%s", this.getBookTitle(), this.getAuthor(), this.getCategory(), this.getStatus());
+
+    public StandardBook getReplacement(){
+        String newISBN = "978-3-49-823091-7";
+        String hiddenTitle = "UNKNOWN";
+        String hiddenAuthor = "J.R";
+
+        return new StandardBook(newISBN, hiddenTitle,hiddenAuthor, "STANDARD", getStatus());
+    }
+
+
+    public Boolean validatePassword(String password){
+        if (PASSWORD.equalsIgnoreCase(password)){
+            return true;
+        }else{
+            System.out.println("Wrong Password.");
+            return false;
+        }
+
     }
 
 }

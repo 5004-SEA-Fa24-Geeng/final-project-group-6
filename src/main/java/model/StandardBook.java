@@ -11,8 +11,8 @@ public class StandardBook extends AbstractBook {
      * @param status book status.
      */
 
-    public StandardBook(int isbn, String bookTitle, String author, String category, String status) {
-        super(isbn,BookType.STANDARD, bookTitle, author, category, status);
+    public StandardBook(String isbn, String bookTitle, String author, String category, String status) {
+        super(isbn,"STANDARD", bookTitle, author, category, status);
     }
 
 

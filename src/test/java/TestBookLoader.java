@@ -1,18 +1,16 @@
-import Model.*;
+import model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBookLoader {
 
-
     @Test
-    public void testLoadBooks() {
-        Set<IBook> books = BookLoader.loadBooks("/Library.csv");
+    public void testLoadBooksFromFile() {
+        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
 
         assertNotNull(books);
         assertEquals(4, books.size());
