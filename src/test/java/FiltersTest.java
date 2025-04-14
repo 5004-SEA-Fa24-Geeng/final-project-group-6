@@ -1,5 +1,9 @@
+import model.IBook;
+import model.StandardBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.awt.print.Book;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,21 +15,23 @@ class FiltersTest {
 
     @Test
     void filter() {
-        InsertBookClass comicBook = new InsertBookClass();
-        boolean actual = Filters.filter(comicBook, BookDataSabrina.CATEGORY, Operations.EQUALS, "Comic");
+        //Doesn't pass currently due to issure in
+        IFilters myFilter = new Filters();
+        IBook comicBook = new StandardBook(123, "title", "authorname", "comic", "available");
+        boolean actual = myFilter.filter(comicBook, BookDataSabrina.CATEGORY, Operations.EQUALS, "Comic");
         assertEquals(true, actual);
 
-        boolean actual2 = Filters.filter(comicBook, BookDataSabrina.AUTHOR, Operations.EQUALS, "Author name");
+        boolean actual2 = myFilter.filter(comicBook, BookDataSabrina.AUTHOR, Operations.EQUALS, "Author name");
         assertEquals(true, actual2);
 
-        boolean actual3 = Filters.filter(comicBook, BookDataSabrina.TITLE, Operations.EQUALS, "Title name");
+        boolean actual3 = myFilter.filter(comicBook, BookDataSabrina.TITLE, Operations.EQUALS, "Title name");
         assertEquals(true, actual3);
 
-        boolean actual4 = Filters.filter(comicBook, BookDataSabrina.ISBN, Operations.EQUALS, "ISBN number");
+        boolean actual4 = myFilter.filter(comicBook, BookDataSabrina.ISBN, Operations.EQUALS, "ISBN number");
         assertEquals(true, actual4);
 
-        InsertBookClass historyBook = new InsertBookClass();
-        boolean actual5 = Filters.filter(historyBook, BookDataSabrina.CATEGORY, Operations.EQUALS, "comic");
+        IBook historyBook = new StandardBook(123, "title", "authorname", "HISTORY", "available");
+        boolean actual5 = myFilter.filter(historyBook, BookDataSabrina.CATEGORY, Operations.EQUALS, "comic");
         assertEquals(false, actual5);
 
 

@@ -1,6 +1,8 @@
+import model.IBook;
+
 import java.util.Comparator;
 
-public final class Sorts {
+public final class Sorts implements ISorts {
     /**
      * Constructor for Sorts.
      */
@@ -12,11 +14,12 @@ public final class Sorts {
      * @param ascending In ascending or descending order.
      * @return A comparator to sort the books.
      */
-    public static Comparator<InsertBookClass> getSorting(BookDataSabrina bookData, boolean ascending) {
+    @Override
+    public Comparator<IBook> getSorting(BookDataSabrina bookData, boolean ascending) {
         switch (bookData) {
             case TITLE:
                 return (o1, o2) -> {
-                    int compare = o1.getTitle().toLowerCase().compareTo(o2.getTitle().toLowerCase());
+                    int compare = o1.getBookTitle().toLowerCase().compareTo(o2.getBookTitle().toLowerCase());
                     return ascending ? compare : -compare;
                 };
             case AUTHOR:
