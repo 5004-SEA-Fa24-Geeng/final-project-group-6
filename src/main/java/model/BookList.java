@@ -77,8 +77,11 @@ public class BookList implements IBookList {
     @Override
     public void updateLibrary(String filename, String isbnToUpdate, String newStatus) {
         List<String> updatedLines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(filename)) {
+            if (is == null) {
+                throw new FileNotFoundException("Resource not found: " + filename);
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String header = reader.readLine();
             if (header != null) {
                 updatedLines.add(header);
@@ -117,8 +120,16 @@ public class BookList implements IBookList {
 
     @Override
     public void updateCheckoutFile(String filename, IBook book) {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))){
-            String type = (book instanceof IllegalBook)? "ILLEGAL" : "STANDARD";
+
+        try {
+            // Ensure directory exists
+            File file = new File(filename);
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();  // Create missing directories
+            }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+            String type = (book instanceof IllegalBook) ? "ILLEGAL" : "STANDARD";
             writer.write(String.format("%s,%s,%s,%s,%s",
                     book.getISBN(),
                     book.getBookTitle(),
@@ -127,6 +138,7 @@ public class BookList implements IBookList {
                     book.getStatus()
             ));
             writer.newLine();
+        }
         }catch(IOException e){
             System.err.println("Error writing book to checkout file: " + e.getMessage());
         }

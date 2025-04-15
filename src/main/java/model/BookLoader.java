@@ -1,8 +1,6 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +43,7 @@ public class BookLoader {
 
         Set<IBook> books = new HashSet<>();
         List<String> lines;
+
         try{
             InputStream is =  BookLoader.class.getResourceAsStream(filename);
             if (is == null) {

@@ -17,6 +17,9 @@ public class BookRegister {
 
     private final IPlanner SabrinaPlanner;
 
+    private List<IBook> lastFilteredBooks = new ArrayList<>();
+
+
 
     /**
      * scanner to help with processing the command string.
@@ -98,6 +101,7 @@ public class BookRegister {
             if (filter.equalsIgnoreCase(ConsoleText.CMD_CLEAR.toString())) {
                 SabrinaPlanner.reset();
                 printOutput("%s%n", ConsoleText.FILTERED_CLEAR);
+                lastFilteredBooks = new ArrayList<>();
                 return; // leave early.
             }
 
@@ -122,7 +126,8 @@ public class BookRegister {
             printOutput("%s%n", ConsoleText.NO_FILTER);
             result = SabrinaPlanner.filter("");
         }
-        printFilterStream(result, sortON);
+        lastFilteredBooks = result != null ? result.toList() : new ArrayList<>();
+        printFilterStream(lastFilteredBooks.stream(), sortON);
     }
 
     /**
@@ -161,17 +166,17 @@ public class BookRegister {
                     break;
                 case CMD_ADD:
                     String toAdd = remainder().toLowerCase();
-                    if (toAdd.isEmpty()) {
-                        break;
-                    }
+                    if (toAdd.isEmpty()) break;
 
                     if (toAdd.equals("all")) {
-                        // Add all books from current planner filter
-                        List<IBook> allFiltered = SabrinaPlanner.filter("").toList();
-                        for (IBook book : allFiltered) {
-                            bookList.addToList(book.getISBN(), allFiltered.stream());
+                        if (lastFilteredBooks == null || lastFilteredBooks.isEmpty()) {
+                            System.out.println("No filtered books to add.");
+                        } else {
+                            for (IBook book : lastFilteredBooks) {
+                                bookList.addToList(book.getISBN(), lastFilteredBooks.stream());
+                            }
+                            System.out.println("All filtered books added to list.");
                         }
-                        System.out.println("All filtered books added to list.");
                     } else {
                         try {
                             bookList.addToList(toAdd, SabrinaPlanner.filter(""));
@@ -180,17 +185,30 @@ public class BookRegister {
                         }
                     }
                     break;
+
                 case CMD_REMOVE:
                     String remove = remainder().toLowerCase();
-                    if (remove.isEmpty()) {
+                    if (remove.isEmpty()) break;
+
+                    if (remove.equals("all")) {
+                        if (lastFilteredBooks == null || lastFilteredBooks.isEmpty()) {
+                            System.out.println("No filtered books to remove.");
+                        } else {
+                            for (IBook book : lastFilteredBooks) {
+                                bookList.removeFromList(book.getISBN());
+                            }
+                            printOutput("All filtered books removed from the list.%n");
+                        }
                         break;
                     }
+
                     try {
                         bookList.removeFromList(remove);
                     } catch (IllegalArgumentException e) {
                         printOutput("%s %s%n", ConsoleText.INVALID_LIST, remove);
                     }
                     break;
+
                 case CMD_CHECKOUT:
                     processCheckOut(remainder().trim());
                     break;

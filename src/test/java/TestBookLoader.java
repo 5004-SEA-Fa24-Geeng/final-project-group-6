@@ -10,7 +10,7 @@ public class TestBookLoader {
 
     @Test
     public void testLoadBooksFromFile() {
-        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
+        Set<IBook> books = BookLoader.loadBooksFromFile("/src/output/Library.csv");
 
         assertNotNull(books);
         assertEquals(4, books.size());

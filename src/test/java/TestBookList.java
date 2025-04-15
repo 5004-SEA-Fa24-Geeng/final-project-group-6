@@ -45,7 +45,7 @@ public class TestBookList {
 
     @Test
     public void testUpdateLibrary() throws IOException{
-        String libFile = tempDir.resolve("Library.csv").toString();
+        String libFile = tempDir.resolve("src/output/Library.csv").toString();
         String testISBN = "123456";
 
         Files.write(Path.of(libFile), List.of(

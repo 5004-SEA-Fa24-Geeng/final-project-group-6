@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class BookController implements IBookController {
 
 private static final String CHECKIN_FILE = "Library.csv";
-private static final String CHECKOUT_FILE = "src/output/checkoutBook.csv";
+private static final String CHECKOUT_FILE = "output/checkoutBook.csv";
 
 
 // Process book check-out (borrowing the book)

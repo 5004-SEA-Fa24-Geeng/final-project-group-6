@@ -3,13 +3,8 @@ package presenter;
 import controller.*;
 import model.BookList;
 import model.BookLoader;
-import model.IBook;
 import model.IBookList;
 import view.BookRegister;
-
-
-import java.util.Scanner;
-import java.util.Set;
 
 public class LibrisApp {
 
