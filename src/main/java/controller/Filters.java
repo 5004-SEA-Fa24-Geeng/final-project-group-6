@@ -45,7 +45,7 @@ public class Filters implements IFilters {
     public boolean filterString(String bookData, Operations op, String value) {
         switch (op) {
             case EQUALS:
-                return bookData.replaceAll(" ", "").equals(value);
+                return bookData.replaceAll(" ", "").equalsIgnoreCase(value.replaceAll(" ", ""));
             case CONTAINS:
                 return bookData.toLowerCase().replaceAll(" ", "").contains(value.toLowerCase().replaceAll(" ", ""));
             default:

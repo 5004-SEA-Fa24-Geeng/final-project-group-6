@@ -145,8 +145,13 @@ public class BookRegister {
      */
     private void processList() {
         ConsoleText ct = ConsoleText.INVALID;
+//        if (current.hasNext()) {
+//
+//            ct = nextCommand();
         if (current.hasNext()) {
-            ct = nextCommand();
+            // consume the *next* part after "list"
+            String next = current.next().trim();
+            ct = ConsoleText.fromString(next);
             switch (ct) {
                 case CMD_SHOW:
                     printCurrentList();
@@ -159,10 +164,20 @@ public class BookRegister {
                     if (toAdd.isEmpty()) {
                         break;
                     }
-                    try {
-                        bookList.addToList(toAdd, SabrinaPlanner.filter(""));
-                    } catch (IllegalArgumentException e) {
-                        printOutput("%s %s%n", ConsoleText.INVALID_LIST, toAdd);
+
+                    if (toAdd.equals("all")) {
+                        // Add all books from current planner filter
+                        List<IBook> allFiltered = SabrinaPlanner.filter("").toList();
+                        for (IBook book : allFiltered) {
+                            bookList.addToList(book.getISBN(), allFiltered.stream());
+                        }
+                        System.out.println("All filtered books added to list.");
+                    } else {
+                        try {
+                            bookList.addToList(toAdd, SabrinaPlanner.filter(""));
+                        } catch (IllegalArgumentException e) {
+                            printOutput("%s %s%n", ConsoleText.INVALID_LIST, toAdd);
+                        }
                     }
                     break;
                 case CMD_REMOVE:

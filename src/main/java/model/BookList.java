@@ -42,17 +42,28 @@ public class BookList implements IBookList {
     /**
      * books to add to (check in or check out) list.
      *
-     * @param ISBN     String to parse.
+     * @param input     String to parse.
      * @param filtered filtered collection to use for adding.
      * @throws IllegalArgumentException if string is invalid.
      */
     @Override
-    public void addToList(String ISBN, Stream<IBook> filtered) throws IllegalArgumentException {
+    public void addToList(String input, Stream<IBook> filtered) throws IllegalArgumentException {
         List<IBook> filteredList = filtered.toList();
+        boolean added = false;
+
         for (IBook book : filteredList) {
-            if (ISBN.equalsIgnoreCase(book.getISBN())) {
+            if (input.equalsIgnoreCase(book.getISBN()) ||
+                    input.equalsIgnoreCase(book.getBookTitle()) ||
+                    input.equalsIgnoreCase(book.getAuthor()) ||
+                    input.equalsIgnoreCase(book.getCategory())) {
+
                 books.add(book);
+                added = true;
             }
+        }
+
+        if (!added) {
+            throw new IllegalArgumentException("No match found for input: " + input);
         }
     }
 
@@ -123,21 +134,30 @@ public class BookList implements IBookList {
 
     /**
      * remove book from list by isbn
-     * @param ISBN isbn of book to remove.
+     * @param input data of book to remove.
      */
 
     @Override
-    public void removeFromList(String ISBN){
+    public void removeFromList(String input) throws IllegalArgumentException{
         IBook bookToRemove = null;
+        String inputLC = input.toLowerCase();
 
         for (IBook book : books) {
-            if (book.getISBN().equalsIgnoreCase(ISBN)) {
+            if (book.getISBN().equalsIgnoreCase(input) ||
+                    book.getBookTitle().toLowerCase().contains(inputLC) ||
+                    book.getAuthor().toLowerCase().contains(inputLC) ||
+                    book.getCategory().toLowerCase().contains(inputLC)) {
+
                 bookToRemove = book;
                 break;
             }
         }
 
-        books.remove(bookToRemove);
+        if (bookToRemove != null) {
+            books.remove(bookToRemove);
+        } else {
+            throw new IllegalArgumentException("No matching book found to remove for input: " + input);
+        }
     }
 
     public int count(){

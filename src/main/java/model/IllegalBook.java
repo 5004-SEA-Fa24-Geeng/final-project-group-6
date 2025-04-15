@@ -18,14 +18,7 @@ public class IllegalBook extends AbstractBook {
         super(isbn,"ILLEGAL", bookTitle, author, category, status);
     }
 
-    /**
-     *
-     * @return altered toString for illegal book format.
-     */
-    @Override
-    public String toString() {
-        return String.format("[ILLEGAL] %s by %s (%s)", getBookTitle(), getAuthor(), getCategory());
-    }
+
 
     public StandardBook getReplacement(){
         String newISBN = "978-3-49-823091-7";

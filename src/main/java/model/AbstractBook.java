@@ -2,7 +2,7 @@ package model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public abstract class AbstractBook implements IBook {
+public abstract class AbstractBook implements IBook, Comparable<IBook> {
 
     /** variable for isbn. */
     protected String isbn;
@@ -114,8 +114,9 @@ public abstract class AbstractBook implements IBook {
 
     @Override
     public String toString() {
-        return String.format("[ILLEGAL] %s by %s (%s) - ISBN: %s", bookTitle, author, category, isbn);
+        return String.format("%s by %s (%s) — ISBN: %s", getBookTitle(), getAuthor(), getCategory(), getISBN());
     }
+
 
     /**
      * Get the Name (value) pair based on the bookData enum.
@@ -127,15 +128,7 @@ public abstract class AbstractBook implements IBook {
      */
     @Override
     public String toStringWithInfo(BookData sortON) {
-        switch (sortON) {
-            case ISBN: return getISBN();
-            case TITLE: return getBookTitle();
-            case AUTHOR: return getAuthor();
-            case CATEGORY: return getCategory();
-            case STATUS: return getStatus();
-            default:
-                return getBookTitle() + " by " + getAuthor() + " (" + getCategory() + ")";
-        }
+        return toString();
     }
 
 
@@ -147,11 +140,18 @@ public abstract class AbstractBook implements IBook {
         return this.getISBN().equalsIgnoreCase(book.getISBN());
     }
 
-
-    public int hashcode(Object obj){
-        return HashCodeBuilder.reflectionHashCode(this,"status");
+    @Override
+    public int compareTo(IBook other) {
+        return this.getISBN().compareTo(other.getISBN());  // ascending by ISBN
     }
 
 
+
+    @Override
+    public int hashCode() {
+        return getISBN().toLowerCase().hashCode();
     }
+
+
+}
 

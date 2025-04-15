@@ -6,13 +6,11 @@ import model.IBookList;
 
 import java.util.Collection;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class BookController implements IBookController {
 
 private static final String CHECKIN_FILE = "Library.csv";
-private static final String CHECKOUT_FILE = "checkoutBook.csv";
+private static final String CHECKOUT_FILE = "src/output/checkoutBook.csv";
 
 
 // Process book check-out (borrowing the book)
