@@ -9,73 +9,352 @@ import util.InputValidator;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class BookRegister {
-    private final Scanner in;
-    private final PrintStream out;
+    private static Scanner in = new Scanner(System.in);
     private final IBookController controller;
 
-    public BookRegister(Scanner in, OutputStream out, IBookController controller) {
-        this.in = in;
-        this.out = new PrintStream(out);
+    private final IBookList bookList;
+
+    private final IPlanner SabrinaPlanner;
+
+
+    /**
+     * scanner to help with processing the command string.
+     */
+    private Scanner current;
+
+    public BookRegister(IBookList bookList, IPlanner planner, IBookController controller) {
         this.controller = controller;
+        this.bookList = bookList;
+        this.SabrinaPlanner = planner;
     }
 
+    /**
+     * Start application.
+     */
     public void start() {
-        out.println("Welcome to Libris! Enter a command: checkin <ISBN>, checkout <ISBN>, list, help, or quit.");
+        printOutput("%s%n", ConsoleText.WELCOME);
+        ConsoleText ct = nextCommand();
 
-        while (true) {
-            out.print("> ");
-            String inputLine = in.nextLine().trim();
-
-            if (inputLine.equalsIgnoreCase("quit")) {
-                out.println("Exiting the system. Goodbye!");
-                break;
-            } else if (inputLine.equalsIgnoreCase("help")) {
-                processHelp();
-            } else if (inputLine.equalsIgnoreCase("list")) {
-                controller.displayCheckoutList();
-            } else if (inputLine.startsWith("checkin ")) {
-                processCheckIn(inputLine.substring(8).trim());
-            } else if (inputLine.startsWith("checkout ")) {
-                processCheckOut(inputLine.substring(9).trim());
-            } else {
-                out.println("Unknown command. Type 'help' for guidance.");
+        while (ct != ConsoleText.CMD_EXIT) {
+            switch (ct) {
+                case CMD_HELP:
+                    processHelp();
+                    break;
+                case CMD_FILTER:
+                    processFilter();
+                    break;
+                case CMD_LIST:
+                    processList();
+                    break;
+                case INVALID:
+                default:
+                    printOutput("%s%n", ConsoleText.INVALID);
             }
+            current.close();
+            current = null;
+            // get the next prompt
+            ct = nextCommand();
+        }
+
+        printOutput("%s%n", ConsoleText.GOODBYE);
+    }
+
+    /**
+     * Process the help command.
+     */
+    private void processHelp() {
+        ConsoleText ct = ConsoleText.CMD_HELP;
+        if (current.hasNext()) {
+            ct = nextCommand();
+        }
+        switch (ct) {
+            case CMD_FILTER:
+                printOutput("%s%n", ConsoleText.FILTER_HELP);
+                break;
+            case CMD_LIST:
+                printOutput("%s%n", ConsoleText.LIST_HELP);
+                break;
+            default:
+                printOutput("%s%n", ConsoleText.HELP);
         }
     }
 
-    public void processHelp() {
-        out.println("Available commands:");
-        out.println("  checkin <ISBN>   - Return a book");
-        out.println("  checkout <ISBN>  - Borrow a book");
-        out.println("  list             - View currently checked-out books");
-        out.println("  help             - Show this help message");
-        out.println("  quit             - Exit the system");
+    /**
+     * Process the filter command.
+     */
+    private void processFilter() {
+        Stream<IBook> result = null;
+        BookData sortON = BookData.NAME; // default
+
+        if (current.hasNext()) {
+            String filter = remainder();
+            filter = filter.replaceAll("\\s", ""); // remove spaces
+            filter = filter.toLowerCase(); // make it lower case
+            if (filter.equalsIgnoreCase(ConsoleText.CMD_QUESTION.toString())) {
+                printOutput("%s%n", ConsoleText.FILTER_HELP);
+                return; // leave early.
+            }
+            if (filter.equalsIgnoreCase(ConsoleText.CMD_CLEAR.toString())) {
+                SabrinaPlanner.reset();
+                printOutput("%s%n", ConsoleText.FILTERED_CLEAR);
+                return; // leave early.
+            }
+
+            if (filter.contains(ConsoleText.CMD_SORT_OPTION.toString())) {
+                // break it up, figure out sort
+                boolean ascending = true; // default
+                String[] parts = filter.split(ConsoleText.CMD_SORT_OPTION.toString());
+                if (parts.length == 2) {
+                    String sort = parts[1];
+                    try {
+                        sortON = BookData.fromString(sort);
+                    } catch (IllegalArgumentException e) {
+                        printOutput("%s%n", ConsoleText.INVALID);
+                        return; // leave early.
+                    }
+                }
+                result = SabrinaPlanner.filter(parts[0], sortON, ascending);  // NOTICE: sortON and ascending are used here.
+            } else {
+                result = SabrinaPlanner.filter(filter); // default sort
+            }
+        } else {
+            printOutput("%s%n", ConsoleText.NO_FILTER);
+            result = SabrinaPlanner.filter("");
+        }
+        printFilterStream(result, sortON);
     }
+
+    /**
+     * Print the filtered stream of books.
+     *
+     * @param books  the stream of books to print.
+     * @param sortON sortOn column based on book info.
+     */
+    private static void printFilterStream(Stream<IBook> books, BookData sortON) {
+        int counter = 1;
+        List<IBook> bookList = books != null ? books.toList() : Collections.emptyList();
+        for (IBook book : bookList) {
+            printOutput("%d: %s%n", counter++, book.toStringWithInfo(sortON));
+        }
+    }
+
+
+    /**
+     * Process the list command.
+     */
+    private void processList() {
+        ConsoleText ct = ConsoleText.INVALID;
+        if (current.hasNext()) {
+            ct = nextCommand();
+            switch (ct) {
+                case CMD_SHOW:
+                    printCurrentList();
+                    break;
+                case CMD_CLEAR:
+                    bookList.clear();
+                    break;
+                case CMD_ADD:
+                    String toAdd = remainder().toLowerCase();
+                    if (toAdd.isEmpty()) {
+                        break;
+                    }
+                    try {
+                        bookList.addToList(toAdd, SabrinaPlanner.filter(""));
+                    } catch (IllegalArgumentException e) {
+                        printOutput("%s %s%n", ConsoleText.INVALID_LIST, toAdd);
+                    }
+                    break;
+                case CMD_REMOVE:
+                    String remove = remainder().toLowerCase();
+                    if (remove.isEmpty()) {
+                        break;
+                    }
+                    try {
+                        bookList.removeFromList(remove);
+                    } catch (IllegalArgumentException e) {
+                        printOutput("%s %s%n", ConsoleText.INVALID_LIST, remove);
+                    }
+                    break;
+                case CMD_CHECKOUT:
+                    processCheckOut(remainder().trim());
+                    break;
+
+                case CMD_CHECKIN:
+                    processCheckIn(remainder().trim());
+                    break;
+                case CMD_QUESTION:
+                case CMD_HELP:
+                    printOutput("%s%n", ConsoleText.LIST_HELP);
+                    break;
+                default:
+                    printOutput("%s%n", ConsoleText.INVALID);
+                    printOutput("%s%n", ConsoleText.LIST_HELP);
+            }
+        } else {
+            printCurrentList();
+        }
+    }
+
+
+
+
+    /**
+     * Print the current list of books.
+     */
+    private void printCurrentList() {
+        if (bookList.count() > 0) {
+            int counter = 1;
+            for (IBook book : bookList.getBooks()) {
+                printOutput("%d: %s%n", counter++, book);
+            }
+        } else {
+            System.out.println("No Books in current list.");
+        }
+
+    }
+
+
+    /**
+     * @return the remainder of the current line.
+     */
+    private String remainder() {
+        return current != null && current.hasNext() ? current.nextLine().trim() : "";
+    }
+
 
     public void processCheckIn(String isbn) {
-        if (!InputValidator.isValidISBN(isbn)) {
-            out.println("Invalid ISBN format. Must be 10 or 13 digits.");
+        // Check if no ISBN was passed
+        if (isbn == null || isbn.isEmpty()) {
+            for (IBook book : bookList.getBooks()) {
+                if (book.getStatus().equalsIgnoreCase("unavailable")) {
+                    controller.checkInBooks(bookList.getBooks(), book.getISBN(), bookList);
+                }
+            }
             return;
         }
-        controller.checkInBooks(isbn);
+
+        // Otherwise, check in a single book
+        if (!InputValidator.isValidISBN(isbn)) {
+            System.out.println("Invalid ISBN format. Must be 10 or 13 digits.");
+            return;
+        }
+        controller.checkInBooks(bookList.getBooks(), isbn, bookList);
     }
 
     public void processCheckOut(String isbn) {
-        if (!InputValidator.isValidISBN(isbn)) {
-            out.println("Invalid ISBN format. Must be 10 or 13 digits.");
+        // Check if no ISBN was passed
+        if (isbn == null || isbn.isEmpty()) {
+            for (IBook book : bookList.getBooks()) {
+                if (book.getStatus().equalsIgnoreCase("available")) {
+                    controller.checkOutBooks(bookList.getBooks(), book.getISBN(), bookList);
+                }
+            }
             return;
         }
-        controller.checkOutBooks(isbn);
+
+        // Otherwise, check out a single book
+        if (!InputValidator.isValidISBN(isbn)) {
+            System.out.println("Invalid ISBN format. Must be 10 or 13 digits.");
+            return;
+        }
+        controller.checkOutBooks(bookList.getBooks(), isbn, bookList);
     }
 
-    public static void main(String[] args) {
-        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
-        IBookController controller = new BookController(new BookList(), new Filters(), new Sorts());
-        BookRegister register = new BookRegister(new Scanner(System.in), System.out, controller);
-        register.start();
+
+
+    /**
+     * Get the next command from the user.
+     *
+     * @return the next command.
+     */
+    private ConsoleText nextCommand() {
+        if (current == null || !current.hasNext()) {
+            String line = getInput("%s", ConsoleText.PROMPT);
+            current = new Scanner(line.trim());
+        }
+        return ConsoleText.fromString(current.next());
+    }
+
+    /**
+     * Gets input from the client.
+     *
+     * @param format the format string to print.
+     * @param args   the arguments to the format string.
+     * @return the input from the client as a string, one line at a time.
+     */
+
+    private static String getInput(String format, Object... args) {
+        System.out.printf(format, args);
+        if (in == null) {
+            return "";
+        }
+        if (!in.hasNextLine()) {
+            return "";
+        }
+        return in.nextLine();
+    }
+
+    /**
+     * Prints output to the user.
+     *
+     * @param format the format string to print.
+     * @param output the output to print (array to match the format).
+     */
+    private static void printOutput(String format, Object... output) {
+        System.out.printf(format, output);
+    }
+
+    private enum ConsoleText {
+        /**
+         * various commands and text.
+         */
+        WELCOME, PROMPT, INVALID, HELP, CMD_SHOW, FILTER_HELP, FILTERED_CLEAR, NO_FILTER,
+
+        CMD_SORT_OPTION, GOODBYE, LIST_HELP, INVALID_LIST,
+
+        CMD_EXIT, CMD_HELP, CMD_QUESTION, CMD_FILTER, CMD_LIST,
+        /**
+         * commands specific to lists and filters.
+         */
+        CMD_ADD, CMD_REMOVE, CMD_CLEAR, CMD_CHECKOUT, CMD_CHECKIN;
+
+
+        /**
+         * load the files on class load.
+         */
+        private static final Properties CTEXT = new Properties();
+
+        @Override
+        public String toString() {
+            return CTEXT.getProperty(this.name().toLowerCase());
+        }
+
+        /**
+         * Get the enum from a string.
+         *
+         * @param str the string to convert to an enum.
+         * @return the enum value.
+         */
+        public static ConsoleText fromString(String str) {
+            for (ConsoleText ct : ConsoleText.values()) {
+                if (ct.toString() != null && ct.toString().equalsIgnoreCase(str)) {
+                    return ct;
+                }
+            }
+            return ConsoleText.INVALID;
+        }
+
+        static {
+            try {
+                CTEXT.loadFromXML(BookRegister.class.getResourceAsStream("/console.properties"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

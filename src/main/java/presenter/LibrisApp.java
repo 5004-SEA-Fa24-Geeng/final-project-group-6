@@ -12,20 +12,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class LibrisApp {
+
+    /** default location of Library. */
+    private static final String DEFAULT_COLLECTION = "/Library.csv";
+
+    /** private constructor as static class. */
+    private LibrisApp() {}
+
     public static void main(String[] args) {
-        // Load books from Library.csv located in src/main/resources
-        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
 
-        // Initialize BookList, controller.Filters, and controller.Sorts
-        IBookList bookList = new BookList();
-        IFilters filters = new Filters();
-        ISorts sorts = new Sorts();
+        IPlanner SabrinaPlanner = new Planner(BookLoader.loadBooksFromFile(DEFAULT_COLLECTION));
+        IBookList list = new BookList();
+        IBookController controller = new BookController();
+        BookRegister app = new BookRegister(list, SabrinaPlanner, controller);
+        app.start();
 
-        // Create the controller and the UI entry
-        IBookController controller = new BookController(bookList, filters, sorts);
-        BookRegister register = new BookRegister(new Scanner(System.in), System.out, controller);
-
-        // Start the command line interface
-        register.start();
     }
 }

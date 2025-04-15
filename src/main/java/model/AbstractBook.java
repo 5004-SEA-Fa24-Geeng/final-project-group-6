@@ -117,6 +117,28 @@ public abstract class AbstractBook implements IBook {
         return String.format("[ILLEGAL] %s by %s (%s) - ISBN: %s", bookTitle, author, category, isbn);
     }
 
+    /**
+     * Get the Name (value) pair based on the GameData enum.
+     *
+     * In the case of Name, it will return only the name of the game.
+     *
+     * @param col GameData enum value
+     * @return value of Name (value) pair
+     */
+    public String toStringWithInfo(BookData col) {
+        switch (col) {
+            case ISBN:
+                return isbn;
+            case AUTHOR:
+                return String.format("%s, %s", isbn, author);
+            case TITLE:
+                return String.format("%s, %s", isbn, bookTitle);
+            case CATEGORY:
+                return String.format("%s, %s", isbn, category);
+            default:
+                return isbn;
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {

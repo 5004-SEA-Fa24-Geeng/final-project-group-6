@@ -8,6 +8,7 @@ public interface IBook {
     String getISBN();
     String getStatus();
     String toString();
+    String toStringWithInfo(BookData col);
     void setStatus(String status);
 
 }

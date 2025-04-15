@@ -1,6 +1,7 @@
 package controller;
 
 import model.IBook;
+import model.IBookList;
 
 import java.util.Collection;
 
@@ -13,17 +14,17 @@ public interface IBookController {
      * Check out a book by its ISBN. May require password if it's an illegal book.
      * @param ISBN the ISBN of the book to check out.
      */
-    void checkOutBooks(Collection<IBook> books, String ISBN);
+    void checkOutBooks(Collection<IBook> books, String ISBN, IBookList bookList);
 
     /**
      * Check in a book by its ISBN (return).
      * @param ISBN the ISBN of the book to check in.
      */
-    void checkInBooks(Collection<IBook> books, String ISBN);
+    void checkInBooks(Collection<IBook> books, String ISBN, IBookList bookList);
 
-    /**
-     * Display all books currently in the checkout list.
-     */
-    void displayCheckoutList();
+//    /**
+//     * Display all books currently in the checkout list.
+//     */
+//    void displayCheckoutList();
 
 }
