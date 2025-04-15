@@ -1,9 +1,6 @@
 package view;
 
-import controller.BookController;
-import controller.Filters;
-import controller.IBookController;
-import controller.Sorts;
+import controller.*;
 import model.*;
 import util.InputValidator;
 

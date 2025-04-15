@@ -1,5 +1,6 @@
 package controller;
 
+import model.BookData;
 import model.IBook;
 
 public class Filters implements IFilters {
@@ -17,16 +18,16 @@ public class Filters implements IFilters {
      * @return
      */
     @Override
-    public boolean filter(IBook book, BookDataSabrina column, Operations op, String value) {
+    public boolean filter(IBook book, BookData column, Operations op, String value) {
         switch (column) {
-            case BookDataSabrina.CATEGORY:
+            case CATEGORY:
                 //getCategory might not exist in our implementation or be different. Placeholder for now
                 return filterString(book.getCategory(), op, value);
-            case BookDataSabrina.AUTHOR:
+            case AUTHOR:
                 return filterString(book.getAuthor(), op, value);
-            case BookDataSabrina.TITLE:
+            case TITLE:
                 return filterString(book.getBookTitle(), op, value);
-            case BookDataSabrina.ISBN:
+            case ISBN:
                 return filterInteger(Integer.parseInt(book.getISBN()), op, value);
             default:
                 return false;

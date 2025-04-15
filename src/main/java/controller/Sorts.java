@@ -1,5 +1,6 @@
 package controller;
 
+import model.BookData;
 import model.IBook;
 
 import java.util.Comparator;
@@ -17,14 +18,14 @@ public final class Sorts implements ISorts {
      * @return A comparator to sort the books.
      */
     @Override
-    public Comparator<IBook> getSorting(BookDataSabrina bookData, boolean ascending) {
+    public Comparator<IBook> getSorting(BookData bookData, boolean ascending) {
         switch (bookData) {
-            case BookDataSabrina.TITLE:
+            case TITLE:
                 return (o1, o2) -> {
                     int compare = o1.getBookTitle().toLowerCase().compareTo(o2.getBookTitle().toLowerCase());
                     return ascending ? compare : -compare;
                 };
-            case BookDataSabrina.AUTHOR:
+            case AUTHOR:
                 return (o1, o2) -> {
                     int compare = o1.getAuthor().toLowerCase().compareTo(o2.getAuthor().toLowerCase());
                     return ascending ? compare : -compare;

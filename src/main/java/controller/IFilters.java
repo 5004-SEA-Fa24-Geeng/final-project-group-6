@@ -1,5 +1,6 @@
 package controller;
 
+import model.BookData;
 import model.IBook;
 
 public interface IFilters {
@@ -11,7 +12,7 @@ public interface IFilters {
      * @param value
      * @return
      */
-    public boolean filter(IBook book, BookDataSabrina column, Operations op, String value);
+    public boolean filter(IBook book, BookData column, Operations op, String value);
 
     /**
      * Filter based on string. Figure out if we are using a similar filtering system as 5-6?

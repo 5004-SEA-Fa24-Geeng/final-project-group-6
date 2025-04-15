@@ -1,5 +1,6 @@
 package controller;
 
+import model.BookData;
 import model.IBook;
 
 import java.util.Comparator;
@@ -12,5 +13,5 @@ public interface ISorts {
      * @param ascending In ascending or descending order.
      * @return A comparator to sort the books.
      */
-    public Comparator<IBook> getSorting(BookDataSabrina bookData, boolean ascending);
+    public Comparator<IBook> getSorting(BookData bookData, boolean ascending);
 }

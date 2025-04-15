@@ -1,12 +1,21 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/IE0ITl4j)
 # Final Project for CS 5004 - (APPLICATION NAME/Update)
 
-(remove this and add your sections/elements)
-This readme should contain the following information: 
+Group Member:
+Sabrina Herman
+https://github.com/sabrina-herman
+Ife Areogun
+https://github.com/idareo
+Anqi Xu
+https://github.com/AnqiXu1
 
-* The group member's names and link to their personal githubs
-* The application name and a brief description of the application
-* Links to design documents and manuals
-* Instructions on how to run the application
+Links to design documents
+https://mermaid.live/edit#pako:eNrVV1tv2zYU_iuEnmRYNuJbbAuGgSZFVgNbMtR92rwHRmJsrRIpkFSxNPN_Hy-SdSTRjtu3-UUyv3O_8ejNi1hMvNAbDAY7KhOZkhA9JBSn6HfO_iaRRL9wVuTo5hYNENrQRCYKi4lI9nRHDVeUYiE-JnjPcbajccIVV8Iouvuyo0j9DI7uGPv6mewTIQlHbxbRv4ESGqJthCklHB4_K4YQbTQfgueskHkhQ_RknlvJiVZb4X0kJObS74XoG0tiCOScRUSITyTNL8D3BxJ93dD3KJT2Lol9O-4odHyTpmSPU-PHW9vBR5ypgCsnErpHbfCLTYdFIYgLeWDchURYkj3jr12sj_ZE3lVSte1Oig9G9Fn4vpR_lmArsSyEC7Y-fSZ5iiOSEWripw2CEiSzbG0BRxhRpYPGmMfukP4fo7bZ3j3-REirQmtEZ9MOy3seXLT_Hesv2H7R8isz_WvyzBPxIc-hP32U4YT6lunPvxDme9FzMH_EEn9SlZK2B85vOF_piGiCQOkQcmWFrdemggQkLufBQ-IuKgOrkaRx5PJTK7OnbVUpw6aEhQ-FByhiaZHR01ToQWlFHqtsaC4tyzfWhhcdCnR-gPCCc9V7NjP1sZUbN4-h5qj0U6u5Qm2AoNpz2VF-t26DPji_Qk3vpzkDJBhXt4iGtupN9BxNX4pwpg-ScyKIHmftC0M3D8tyzLFU3dVWGKIaXBmL186GPnHAQOmLY2sEGqIaMHe4E7FN7oSqAdgBm5Olm68XG2_7OKXbvKhr2QRfrN8hDzrz97yAKtLg4m2a2AlUZGJMfDYKTXMHiI3NS88Z7KecqISo9aUhpD71mXmt75F23TyV-ANnmaLwhYRxqVDI9KIoKwVcyW-Kd_MAReUgDFFlmavbzMRQ86aZvdME0sbqIaQzQyjYSYB3kpneTxMKZtWl3gzbw_S0gGk7_APB-gkcvSDMvVlp4ntGJWdqx-Iw6XZo2-maiGcKtDSbNCqXuStI40So3eW1mvhmALcrsR3z2rruoqIFlAuufoWwbRA1fsqWa9xIeo5oyJQ6LIqmQt-hI-hKDpryGuV8fRj7PxLI_g-HsrS6O3jAR0J9cdbFrpo9D0H3BugbTgtXdVt51UrSPn8sMt_VVs9ltTZya82Am33nTqgI3KuRHgiApiuvbC2tuc1XekDPUdfhlasVoUVWhkZtCnWYKrJ6_RoM1o0vOIu3KlwTtXrS0rUO0XD47xo1vwhLQvCtVKlsC2ts_-eI7BJs9ACZHQzKsiBcGt1Og8VFEwCGGre3kBOuLlGjv5ZVgpbxhIEWL1vgJBSyVek9WWyrf0e9wNvzJPZCyQsSeCrZanVWfz1TsDtPHtSX2M4L1WtMXnCRyp23o0fFlmP6B2NZxclZsT944QtOhfpnt8Xyk78iUZ9XbPtKoxMLocqGe1ZQ6YWTydLI9MI37x8vHC1uh6PJcjkbzaaT5WQ5uw28Vy8cj6bDm8V0NJ9MR5P5fDlfHAPvuzHjZjiZ307Hi_FkubhZzBbT8ez4H4-6Oq8
 
-Ask yourself, if you started here in the readme, would you have what you need to work on this project and/or use the application?
+
+Application Name: Libris
+
+Description:
+Libris is a library management application that allows users to interact. Users can search, sort, check out, and return books using their ISBN. In addition to standard operations, Libris supports special functionality for illegal books—these restricted books require a private access code for check-out, and a replacement book is required to complete the process.
+
+To run the application, execute the LibrisApp. Once started, follow the command-line prompts. Remember to enter a valid ISBN which is 10 or 13 digits. The private access code for illegal books is “secret”.
