@@ -1,30 +1,30 @@
 package presenter;
 
 import controller.BookController;
+import controller.IBookController;
+import model.BookList;
 import model.BookLoader;
 import model.IBook;
-import view.BookRegister;
+import model.IBookList;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collection;
 import java.util.Scanner;
+import java.util.Set;
 
 public class LibrisApp {
     public static void main(String[] args) {
-        //Create BookController object
-        String checkOutFile = "checkedout.csv";
-        String checkInFile = "checkin.csv";
-        BookController controller = new BookController(checkOutFile, checkInFile);
+        // Load books from Library.csv located in src/main/resources
+        Set<IBook> books = BookLoader.loadBooks("/Library.csv");
 
-        Collection<IBook> books = BookLoader.loadBooks("standard_books.csv", "illegal_books.csv");
+        // Initialize BookList, Filters, and Sorts
+        IBookList bookList = new BookList(books);
+        IFilters filters = new Filters();
+        ISorts sorts = new Sorts();
 
-        InputStream inputStream = System.in;
-        OutputStream outputStream = System.out;
-        Scanner scanner = new Scanner(inputStream);
+        // Create the controller and the UI entry
+        IBookController controller = new BookController(bookList, filters, sorts);
+        BookRegister register = new BookRegister(new Scanner(System.in), System.out, controller);
 
-        BookRegister register = new BookRegister(scanner, outputStream, books, controller);
-        // Start the BookRegister application
+        // Start the command line interface
         register.start();
     }
 }
