@@ -118,27 +118,26 @@ public abstract class AbstractBook implements IBook {
     }
 
     /**
-     * Get the Name (value) pair based on the GameData enum.
+     * Get the Name (value) pair based on the bookData enum.
      *
-     * In the case of Name, it will return only the name of the game.
+     * In the case of Name, it will return only the name of the book.
      *
-     * @param col GameData enum value
+     * @param sortON  book Data enum value
      * @return value of Name (value) pair
      */
-    public String toStringWithInfo(BookData col) {
-        switch (col) {
-            case ISBN:
-                return isbn;
-            case AUTHOR:
-                return String.format("%s, %s", isbn, author);
-            case TITLE:
-                return String.format("%s, %s", isbn, bookTitle);
-            case CATEGORY:
-                return String.format("%s, %s", isbn, category);
+    @Override
+    public String toStringWithInfo(BookData sortON) {
+        switch (sortON) {
+            case ISBN: return getISBN();
+            case TITLE: return getBookTitle();
+            case AUTHOR: return getAuthor();
+            case CATEGORY: return getCategory();
+            case STATUS: return getStatus();
             default:
-                return isbn;
+                return getBookTitle() + " by " + getAuthor() + " (" + getCategory() + ")";
         }
     }
+
 
     @Override
     public boolean equals(Object obj) {
