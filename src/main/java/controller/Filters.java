@@ -44,6 +44,10 @@ public class Filters implements IFilters {
     @Override
     public boolean filterString(String bookData, Operations op, String value) {
         switch (op) {
+            case EQUALS:
+                return bookData.replaceAll(" ", "").equals(value);
+            case CONTAINS:
+                return bookData.toLowerCase().replaceAll(" ", "").contains(value.toLowerCase().replaceAll(" ", ""));
             default:
                 return false;
         }
@@ -59,6 +63,10 @@ public class Filters implements IFilters {
     @Override
     public boolean filterInteger(int bookData, Operations op, String value) {
         switch (op) {
+            case EQUALS:
+                return bookData == Integer.parseInt(value);
+            case CONTAINS:
+                return Integer.toString(bookData).replaceAll(" ", "").contains(value.toLowerCase().replaceAll(" ", ""));
             default:
                 return false;
         }

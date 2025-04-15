@@ -38,4 +38,27 @@ class FiltersTest {
 
 
     }
+
+    @Test
+    public void testFilterInt() {
+        IFilters myFilter = new Filters();
+        IBook comicBook = new StandardBook("12345678910", "title", "authorname", "comic", "available");
+        boolean actual1 = myFilter.filterInteger(1234567891, Operations.EQUALS, "1234567891");
+        boolean actual2 = myFilter.filterInteger(1234567891, Operations.CONTAINS, "123456789");
+
+        assertEquals(true, actual1);
+        assertEquals(true, actual2);
+
+    }
+
+    @Test
+    public void testFilterString() {
+        IFilters myFilter = new Filters();
+        IBook comicBook = new StandardBook("12345678910", "title", "authorname", "comic", "available");
+        boolean actual1 = myFilter.filterString("title", Operations.EQUALS, "title");
+        boolean actual2 = myFilter.filterString("title", Operations.CONTAINS, "le");
+        assertEquals(true, actual1);
+        assertEquals(true, actual2);
+
+    }
 }
