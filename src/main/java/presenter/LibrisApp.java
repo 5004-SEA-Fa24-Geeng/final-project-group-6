@@ -1,11 +1,12 @@
 package presenter;
 
-import controller.BookController;
-import controller.IBookController;
+import controller.*;
 import model.BookList;
 import model.BookLoader;
 import model.IBook;
 import model.IBookList;
+import view.BookRegister;
+
 
 import java.util.Scanner;
 import java.util.Set;
@@ -13,10 +14,10 @@ import java.util.Set;
 public class LibrisApp {
     public static void main(String[] args) {
         // Load books from Library.csv located in src/main/resources
-        Set<IBook> books = BookLoader.loadBooks("/Library.csv");
+        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
 
-        // Initialize BookList, Filters, and Sorts
-        IBookList bookList = new BookList(books);
+        // Initialize BookList, controller.Filters, and controller.Sorts
+        IBookList bookList = new BookList();
         IFilters filters = new Filters();
         ISorts sorts = new Sorts();
 

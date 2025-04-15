@@ -1,9 +1,9 @@
+import controller.Filters;
+import controller.IFilters;
 import model.IBook;
 import model.StandardBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.awt.print.Book;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,7 +1,9 @@
 package view;
 
 import controller.BookController;
+import controller.Filters;
 import controller.IBookController;
+import controller.Sorts;
 import model.*;
 import util.InputValidator;
 
@@ -71,8 +73,8 @@ public class BookRegister {
     }
 
     public static void main(String[] args) {
-        Set<IBook> books = BookLoader.loadBooks("/Library.csv");
-        IBookController controller = new BookController(new BookList(books), new Filters(), new Sorts());
+        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
+        IBookController controller = new BookController(new BookList(), new Filters(), new Sorts());
         BookRegister register = new BookRegister(new Scanner(System.in), System.out, controller);
         register.start();
     }

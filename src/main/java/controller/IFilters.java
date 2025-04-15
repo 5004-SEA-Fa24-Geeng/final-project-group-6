@@ -1,8 +1,10 @@
+package controller;
+
 import model.IBook;
 
 public interface IFilters {
     /**
-     * Filters the books.
+     * controller.Filters the books.
      * @param book
      * @param column
      * @param op
