@@ -44,19 +44,19 @@ public class TestBookList {
     }
 
     @Test
-    public void testUpdateLibrary() throws IOException{
-        String libFile = tempDir.resolve("src/output/Library.csv").toString();
+    public void testUpdateLibrary(@TempDir Path tempDir) throws IOException{
+        String libFile = tempDir.resolve("Library.csv").toString();
         String testISBN = "123456";
 
         Files.write(Path.of(libFile), List.of(
                 "ISBN,Title,Author,Type,Status",
-                "123456,The Great Book,Jane Doe,STANDARD,available"
+                "123456,The Great Book,Jane Doe,STANDARD,unavailable"
         ));
 
 
-        bookList.updateLibrary(libFile, testISBN, "unavailable");
+        bookList.updateLibrary(libFile, testISBN, "available");
         List<String> lines = Files.readAllLines(Path.of(libFile));
-        assertTrue(lines.stream().anyMatch(line -> line.contains(testISBN) && line.contains("unavailable")));
+        assertTrue(lines.stream().anyMatch(line -> line.contains(testISBN) && line.contains("available")));
     }
 
     @Test

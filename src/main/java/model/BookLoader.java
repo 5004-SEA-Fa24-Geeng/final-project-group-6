@@ -2,6 +2,8 @@ package model;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,6 +68,26 @@ public class BookLoader {
 
         return books;
     }
+
+    /**
+     * loads books file from file path to a set of Book objects.
+     */
+    public static Set<IBook> loadBooksFromFile(Path path) {
+        Set<IBook> books = new HashSet<>();
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            List<String> lines = reader.lines().collect(Collectors.toList());
+            if (lines.isEmpty()) return books;
+            Map<BookData, Integer> columnMap = processHeader(lines.remove(0));
+            return lines.stream()
+                    .map(line -> toBook(line, columnMap))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet());
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            return books;
+        }
+    }
+
 
     /**
      *

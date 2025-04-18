@@ -1,0 +1,31 @@
+ISBN,bookType,bookTitle,authorName,category,status
+7557202309204,ILLEGAL,Learning Java,Robert Brown,Mystery,Available
+7462510011161,STANDARD,History of Time,Alice Johnson,Science,Available
+8090706052957,STANDARD,Python Essentials,Jane Doe,Science,CheckedOut
+8627433565027,STANDARD,Python Essentials,Robert Brown,History,Available
+6389092912,STANDARD,History of Time,Emily White,Science,Available
+6450133488264,STANDARD,History of Time,John Smith,Fiction,CheckedOut
+8305129148,ILLEGAL,The Great Book,Robert Brown,Education,CheckedOut
+0203206438745,ILLEGAL,Mystery of the East,John Smith,Fiction,Available
+7242691063108,ILLEGAL,Learning Java,Emily White,Mystery,CheckedOut
+5243914869423,STANDARD,Learning Java,Alice Johnson,Education,CheckedOut
+3955231278940,STANDARD,Mystery of the East,Jane Doe,Science,Available
+4157005409579,STANDARD,History of Time,Robert Brown,Science,Available
+4190184466097,STANDARD,The Great Book,Robert Brown,Fiction,CheckedOut
+6594001054,ILLEGAL,Python Essentials,John Smith,Mystery,CheckedOut
+0999016285496,ILLEGAL,Python Essentials,Robert Brown,History,CheckedOut
+3816770663,STANDARD,Mystery of the East,Robert Brown,Fiction,CheckedOut
+2771517663,STANDARD,The Great Book,John Smith,Mystery,CheckedOut
+7763118982312,ILLEGAL,Python Essentials,Alice Johnson,Fiction,CheckedOut
+3485937658235,ILLEGAL,History of Time,Jane Doe,Education,Available
+7111710434,ILLEGAL,Mystery of the East,Robert Brown,Fiction,Available
+6528652764328,STANDARD,Learning Java,Robert Brown,History,Available
+4722989576265,ILLEGAL,The Great Book,John Smith,Fiction,Available
+1325781373623,ILLEGAL,History of Time,Alice Johnson,Education,Available
+6798837285,STANDARD,Mystery of the East,Jane Doe,Fiction,CheckedOut
+7334575071,STANDARD,Mystery of the East,John Smith,Mystery,Available
+8442376440,STANDARD,The Great Book,Jane Doe,Education,Available
+5334256906075,STANDARD,Python Essentials,Emily White,Fiction,CheckedOut
+5161359757,STANDARD,The Great Book,Alice Johnson,Science,Available
+9492938617370,ILLEGAL,Learning Java,Emily White,History,CheckedOut
+2784259711806,STANDARD,Python Essentials,Jane Doe,Science,CheckedOut

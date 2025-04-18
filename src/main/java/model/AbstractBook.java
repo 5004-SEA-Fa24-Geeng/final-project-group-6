@@ -114,7 +114,7 @@ public abstract class AbstractBook implements IBook, Comparable<IBook> {
 
     @Override
     public String toString() {
-        return String.format("%s by %s (%s) — ISBN: %s", getBookTitle(), getAuthor(), getCategory(), getISBN());
+        return String.format("%s by %s (%s) — ISBN: %s - %s", getBookTitle(), getAuthor(), getCategory(), getISBN(), getStatus());
     }
 
 

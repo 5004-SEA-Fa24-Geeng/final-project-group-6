@@ -9,6 +9,7 @@ public interface IBook {
     String getStatus();
     String toString();
     String toStringWithInfo(BookData col);
+    int compareTo(IBook other);
     void setStatus(String status);
 
 }

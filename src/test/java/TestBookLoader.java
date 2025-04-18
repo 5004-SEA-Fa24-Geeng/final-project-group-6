@@ -10,10 +10,13 @@ public class TestBookLoader {
 
     @Test
     public void testLoadBooksFromFile() {
-        Set<IBook> books = BookLoader.loadBooksFromFile("/src/output/Library.csv");
+        Set<IBook> books = BookLoader.loadBooksFromFile("/Library.csv");
+
+        System.out.println(BookLoader.class.getResource("/Library.csv"));
+
 
         assertNotNull(books);
-        assertEquals(4, books.size());
+        assertEquals(30, books.size());
 
         boolean hasStandard = books.stream().anyMatch(book -> book instanceof StandardBook);
         boolean hasIllegal = books.stream().anyMatch(book -> book instanceof IllegalBook);
