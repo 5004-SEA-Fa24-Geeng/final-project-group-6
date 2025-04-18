@@ -42,7 +42,7 @@ public class BookList implements IBookList {
     /**
      * books to add to (check in or check out) list.
      *
-     * @param input     String to parse.
+     * @param input    String to parse.
      * @param filtered filtered collection to use for adding.
      * @throws IllegalArgumentException if string is invalid.
      */
@@ -68,10 +68,11 @@ public class BookList implements IBookList {
     }
 
     /**
+     * Update the library file.
      *
-     * @param filename file containing library books.
+     * @param filename     file containing library books.
      * @param isbnToUpdate isbn for book that needs updating.
-     * @param newStatus status you want to change to(available/unavailable).
+     * @param newStatus    status you want to change to(available/unavailable).
      */
 
     @Override
@@ -113,9 +114,10 @@ public class BookList implements IBookList {
     }
 
     /**
+     * update checkout file.
      *
      * @param filename designated checkout file.
-     * @param book book to be checked out.
+     * @param book     book to be checked out.
      */
 
     @Override
@@ -128,29 +130,30 @@ public class BookList implements IBookList {
             if (parentDir != null && !parentDir.exists()) {
                 parentDir.mkdirs();  // Create missing directories
             }
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            String type = (book instanceof IllegalBook) ? "ILLEGAL" : "STANDARD";
-            writer.write(String.format("%s,%s,%s,%s,%s",
-                    book.getISBN(),
-                    book.getBookTitle(),
-                    book.getAuthor(),
-                    type,
-                    book.getStatus()
-            ));
-            writer.newLine();
-        }
-        }catch(IOException e){
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+                String type = (book instanceof IllegalBook) ? "ILLEGAL" : "STANDARD";
+                writer.write(String.format("%s,%s,%s,%s,%s",
+                        book.getISBN(),
+                        book.getBookTitle(),
+                        book.getAuthor(),
+                        type,
+                        book.getStatus()
+                ));
+                writer.newLine();
+            }
+        } catch (IOException e) {
             System.err.println("Error writing book to checkout file: " + e.getMessage());
         }
     }
 
     /**
-     * remove book from list by isbn
+     * remove book from list by isbn.
+     *
      * @param input data of book to remove.
      */
 
     @Override
-    public void removeFromList(String input) throws IllegalArgumentException{
+    public void removeFromList(String input) throws IllegalArgumentException {
         IBook bookToRemove = null;
         String inputLC = input.toLowerCase();
 
@@ -172,7 +175,11 @@ public class BookList implements IBookList {
         }
     }
 
-    public int count(){
+    /**
+     * @return no. of books.
+     */
+
+    public int count() {
         return books.size();
     }
 

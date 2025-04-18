@@ -22,9 +22,4 @@ public interface IBookController {
      */
     void checkInBooks(Collection<IBook> books, String ISBN, IBookList bookList);
 
-//    /**
-//     * Display all books currently in the checkout list.
-//     */
-//    void displayCheckoutList();
-
 }

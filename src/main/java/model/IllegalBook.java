@@ -7,32 +7,35 @@ public class IllegalBook extends AbstractBook {
     protected String PASSWORD = "secret";
 
     /**
-     *
-     *
      * @param bookTitle title of book.
-     * @param author author of book.
-     * @param category book category.
-     * @param status book status.
+     * @param author    author of book.
+     * @param category  book category.
+     * @param status    book status.
      */
     public IllegalBook(String isbn, String bookTitle, String author, String category, String status) {
-        super(isbn,"ILLEGAL", bookTitle, author, category, status);
+        super(isbn, "ILLEGAL", bookTitle, author, category, status);
     }
 
 
-
-    public StandardBook getReplacement(){
+    /**
+     * @return standard book replacement.
+     */
+    public StandardBook getReplacement() {
         String newISBN = "978-3-49-823091-7";
         String hiddenTitle = "UNKNOWN";
         String hiddenAuthor = "J.R";
 
-        return new StandardBook(newISBN, hiddenTitle,hiddenAuthor, "STANDARD", getStatus());
+        return new StandardBook(newISBN, hiddenTitle, hiddenAuthor, "STANDARD", getStatus());
     }
 
-
-    public Boolean validatePassword(String password){
-        if (PASSWORD.equalsIgnoreCase(password)){
+    /**
+     * @param password for illegal books.
+     * @return true/false.
+     */
+    public Boolean validatePassword(String password) {
+        if (PASSWORD.equalsIgnoreCase(password)) {
             return true;
-        }else{
+        } else {
             System.out.println("Wrong Password.");
             return false;
         }

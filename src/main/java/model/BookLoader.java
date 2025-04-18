@@ -20,45 +20,34 @@ public class BookLoader {
     /**
      * private constructor to prevent instantiation.
      */
-    private BookLoader() {}
-
-
-    /**
-     *
-     * @param standardBookFile
-     * @param illegalBookFile
-     * @return
-     */
-    public static Set<IBook> loadBooks(String standardBookFile, String illegalBookFile){
-
-        Set<IBook> combinedBookSet = new HashSet<>();
-        for(String file: new String[]{standardBookFile, illegalBookFile}){
-            combinedBookSet.addAll(loadBooksFromFile(file));
-        }
-        return combinedBookSet;
-
+    private BookLoader() {
     }
+
+
     /**
      * loads books file from csv file to a set of Book objects.
+     *
+     * @param filename to load from.
+     * @return set of books.
      */
     public static Set<IBook> loadBooksFromFile(String filename) {
 
         Set<IBook> books = new HashSet<>();
         List<String> lines;
 
-        try{
-            InputStream is =  BookLoader.class.getResourceAsStream(filename);
+        try {
+            InputStream is = BookLoader.class.getResourceAsStream(filename);
             if (is == null) {
                 throw new RuntimeException("Could not load resource: " + filename);
             }
             InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(isr);
             lines = reader.lines().collect(Collectors.toList());
-        }catch(Exception e){
-            System.err.println("Error reading file:"+ e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error reading file:" + e.getMessage());
             return books;
         }
-        if(lines == null || lines.isEmpty()){
+        if (lines == null || lines.isEmpty()) {
             return books;
         }
 
@@ -70,7 +59,8 @@ public class BookLoader {
     }
 
     /**
-     * loads books file from file path to a set of Book objects.
+     * @param path to allow loading from directory.
+     * @return set of books.
      */
     public static Set<IBook> loadBooksFromFile(Path path) {
         Set<IBook> books = new HashSet<>();
@@ -90,23 +80,23 @@ public class BookLoader {
 
 
     /**
-     *
      * convert line from csv file to either a standard/illegal book object.
-     * @param line line from csv file.
+     *
+     * @param line      line from csv file.
      * @param columnMap map of columns to index.
      * @return book object.
      */
 
-     public static IBook toBook(String line, Map<BookData, Integer> columnMap){
+    public static IBook toBook(String line, Map<BookData, Integer> columnMap) {
         String[] columns = line.split(DELIMITER);
-        if(columns.length < columnMap.values().stream().max(Integer::compareTo).get()){
+        if (columns.length < columnMap.values().stream().max(Integer::compareTo).get()) {
             return null;
         }
 
-        try{
+        try {
             String type = columns[columnMap.get(BookData.TYPE)].toLowerCase();
             IBook book = null;
-             switch(type){
+            switch (type) {
                 case "standard":
                     book = toStandardBook(columns, columnMap);
                     break;
@@ -117,7 +107,7 @@ public class BookLoader {
                     break;
             }
             return book;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 
@@ -125,20 +115,21 @@ public class BookLoader {
 
     /**
      * converts the line from the csv file to a standardBook.
-     * @param columns the columns to convert.
+     *
+     * @param columns   the columns to convert.
      * @param columnMap the map of columns to index.
      * @return standardBook object.
      */
-    private static IBook toStandardBook(String[] columns, Map<BookData, Integer> columnMap){
+    private static IBook toStandardBook(String[] columns, Map<BookData, Integer> columnMap) {
 
-        try{
+        try {
             IBook book = new StandardBook(columns[columnMap.get(BookData.ISBN)],
                     columns[columnMap.get(BookData.TITLE)],
                     columns[columnMap.get(BookData.AUTHOR)],
                     columns[columnMap.get(BookData.CATEGORY)],
                     columns[columnMap.get(BookData.STATUS)]);
             return book;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
 
@@ -147,13 +138,14 @@ public class BookLoader {
 
     /**
      * converts the line from the csv file to a illegalBook.
-     * @param columns the columns to convert.
+     *
+     * @param columns   the columns to convert.
      * @param columnMap the map of columns to index.
      * @return illegalBook object.
      */
-    private static IBook toIllegalBook(String[] columns, Map<BookData, Integer> columnMap){
+    private static IBook toIllegalBook(String[] columns, Map<BookData, Integer> columnMap) {
 
-        try{
+        try {
             IBook book = new IllegalBook(
                     columns[columnMap.get(BookData.ISBN)],
                     columns[columnMap.get(BookData.TITLE)],
@@ -161,7 +153,7 @@ public class BookLoader {
                     columns[columnMap.get(BookData.CATEGORY)],
                     columns[columnMap.get(BookData.STATUS)]);
             return book;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
 
@@ -169,18 +161,19 @@ public class BookLoader {
 
     /**
      * process header line for column mapping.
+     *
      * @param header header line.
      * @return map of column to index.
      */
 
-    public static Map<BookData, Integer> processHeader(String header){
+    public static Map<BookData, Integer> processHeader(String header) {
         Map<BookData, Integer> columnMap = new HashMap<>();
         String[] columns = header.split(DELIMITER);
-        for(int i = 0; i<columns.length; i++){
-            try{
+        for (int i = 0; i < columns.length; i++) {
+            try {
                 BookData col = BookData.fromColumnName(columns[i]);
                 columnMap.put(col, i);
-            }catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Error processing column" + columns[i]);
             }
         }

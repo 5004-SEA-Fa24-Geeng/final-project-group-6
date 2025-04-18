@@ -140,13 +140,22 @@ public abstract class AbstractBook implements IBook, Comparable<IBook> {
         return this.getISBN().equalsIgnoreCase(book.getISBN());
     }
 
+    /**
+     *
+     * @param other the object to be compared.
+     * @return integer based on if they match or not.
+     */
+
     @Override
     public int compareTo(IBook other) {
         return this.getISBN().compareTo(other.getISBN());  // ascending by ISBN
     }
 
 
-
+    /**
+     *
+     * @return hashcode as isbn.
+     */
     @Override
     public int hashCode() {
         return getISBN().toLowerCase().hashCode();
