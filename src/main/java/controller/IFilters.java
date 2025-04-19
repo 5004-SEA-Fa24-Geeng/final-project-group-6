@@ -23,12 +23,4 @@ public interface IFilters {
      */
     public boolean filterString(String bookData, Operations op, String value);
 
-    /**
-     * Filter based on int.
-     * @param bookData
-     * @param op
-     * @param value
-     * @return
-     */
-    public boolean filterInteger(int bookData, Operations op, String value);
 }

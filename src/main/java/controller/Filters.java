@@ -28,7 +28,7 @@ public class Filters implements IFilters {
             case TITLE:
                 return filterString(book.getBookTitle(), op, value);
             case ISBN:
-                return filterInteger(Integer.parseInt(book.getISBN()), op, value);
+                return filterString(book.getISBN(), op, value);
             default:
                 return false;
         }
@@ -48,25 +48,6 @@ public class Filters implements IFilters {
                 return bookData.replaceAll(" ", "").equalsIgnoreCase(value.replaceAll(" ", ""));
             case CONTAINS:
                 return bookData.toLowerCase().replaceAll(" ", "").contains(value.toLowerCase().replaceAll(" ", ""));
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * Filter based on int.
-     * @param bookData
-     * @param op
-     * @param value
-     * @return
-     */
-    @Override
-    public boolean filterInteger(int bookData, Operations op, String value) {
-        switch (op) {
-            case EQUALS:
-                return bookData == Integer.parseInt(value);
-            case CONTAINS:
-                return Integer.toString(bookData).replaceAll(" ", "").contains(value.toLowerCase().replaceAll(" ", ""));
             default:
                 return false;
         }
