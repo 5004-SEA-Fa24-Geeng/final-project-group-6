@@ -3,6 +3,9 @@ package controller;
 import model.BookData;
 import model.IBook;
 
+/**
+ * A class that filters the books.
+ */
 public class Filters implements IFilters {
     /**
      * Constructor
@@ -11,17 +14,16 @@ public class Filters implements IFilters {
 
     /**
      * controller.Filters the books.
-     * @param book
-     * @param column
-     * @param op
-     * @param value
-     * @return
+     * @param book The book.
+     * @param column name of the type of data.
+     * @param op operation done.
+     * @param value value to compare with the value of the book.
+     * @return if the filter done on the book is true or not
      */
     @Override
     public boolean filter(IBook book, BookData column, Operations op, String value) {
         switch (column) {
             case CATEGORY:
-                //getCategory might not exist in our implementation or be different. Placeholder for now
                 return filterString(book.getCategory(), op, value);
             case AUTHOR:
                 return filterString(book.getAuthor(), op, value);
@@ -35,11 +37,11 @@ public class Filters implements IFilters {
     }
 
     /**
-     * Filter based on string. Figure out if we are using a similar filtering system as 5-6?
-     * @param bookData
-     * @param op
-     * @param value
-     * @return
+     * Filter based on string.
+     * @param bookData name of the book.
+     * @param op Operation done.
+     * @param value value to compare with the value of the book.
+     * @return if the filter done on the book is true or not.
      */
     @Override
     public boolean filterString(String bookData, Operations op, String value) {
