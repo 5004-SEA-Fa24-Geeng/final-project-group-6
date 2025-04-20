@@ -30,11 +30,11 @@ class PlannerTest {
     @Test
     public void testFilterISBN() {
         IPlanner planner = new Planner(books);
-        List<IBook> filtered = planner.filter("ISBN == 10987654321").toList();
+        List<IBook> filtered = planner.filter("ISBN==10987654321").toList();
         assertEquals(1, filtered.size());
         assertEquals("10987654321", filtered.get(0).getISBN());
-        List<IBook> filtered2 = planner.filter("ISBN ~= 123").toList();
-        assertEquals(1, filtered.size());
-        assertEquals("12345678910", filtered.get(0).getISBN());
+        List<IBook> filtered2 = planner.filter("ISBN~=123").toList();
+        assertEquals(1, filtered2.size());
+        assertEquals("12345678910", filtered2.get(0).getISBN());
     }
 }
