@@ -46,7 +46,7 @@ public enum Operations {
     /**
      * Gets the operator from a string that contains it.
      *
-     * @param str The string.
+     * @param str The string that contains an operation.
      * @return The operator.
      */
     public static Operations getOperatorFromStr(String str) {
