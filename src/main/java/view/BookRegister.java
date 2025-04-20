@@ -99,7 +99,6 @@ public class BookRegister {
                 return; // leave early.
             }
             if (filter.equalsIgnoreCase(ConsoleText.CMD_CLEAR.toString())) {
-                SabrinaPlanner.reset();
                 printOutput("%s%n", ConsoleText.FILTERED_CLEAR);
                 lastFilteredBooks = new ArrayList<>();
                 return; // leave early.

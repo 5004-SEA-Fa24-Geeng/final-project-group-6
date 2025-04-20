@@ -1,5 +1,5 @@
-package controller;
-
+import controller.IPlanner;
+import controller.Planner;
 import model.IBook;
 import model.StandardBook;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,9 +36,5 @@ class PlannerTest {
         List<IBook> filtered2 = planner.filter("ISBN ~= 123").toList();
         assertEquals(1, filtered.size());
         assertEquals("12345678910", filtered.get(0).getISBN());
-    }
-
-    @Test
-    void reset() {
     }
 }

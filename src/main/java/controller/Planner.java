@@ -67,9 +67,4 @@ public class Planner implements IPlanner {
         Stream<IBook> filteredStream = filterSingle(filter, books.stream()).sorted(bookSorts.getSorting(sortOn, ascending));
         return filteredStream;
     }
-
-    @Override
-    public void reset() {
-        throw new UnsupportedOperationException("Unimplemented method 'reset'");
-    }
 }
