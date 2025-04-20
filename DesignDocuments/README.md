@@ -1,7 +1,9 @@
 # Design Documents
 
 You may have multiple design documents for this project. Place them all in this folder. File naming is up to you, but it should be clear what the document is about. At the bare minimum, you will want a pre/post UML diagram for the project.
-Initial UML
+
+## Initial UML
+
 ```mermaid
 ---
 title: Final Project Group 06 -  Initial design
@@ -138,7 +140,8 @@ direction BT
 
 ```
 
-Final UML
+## Final UML
+
 ```mermaid
 ---
 title: Final Project Group 06 -  Libris Design
