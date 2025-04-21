@@ -1,6 +1,8 @@
 # Manual 
 
-Welcome to the Libris App!
+Welcome to the Libris App! It is a collection of books that allows a user to filter through books base on the title, author, isbn, and category. These filtered lists can also be sorted by book title and author name. Users can add or remove books to their lists and can subsequently check out and check in these books. The project has an additional component that allows the user to access illegal books and check-out a book via a private code. An illegal book check-out requires a replacement.
+
+User “check-outs” will be stored in a .csv file and removed from the “local” .csv  until returned. User “returns” will add the book back into the “local” collection to allow for subsequent check-outs.
 
 ## Start the program by running the LibrisApp.java file.
 
