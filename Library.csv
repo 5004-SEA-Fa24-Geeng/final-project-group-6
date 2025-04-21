@@ -20,7 +20,7 @@ ISBN,bookType,bookTitle,authorName,category,status
 3485937658235,ILLEGAL,History of Time,Jane Doe,Education,Available
 7111710434,ILLEGAL,Mystery of the East,Robert Brown,Fiction,Available
 6528652764328,STANDARD,Learning Java,Robert Brown,History,Available
-4722989576265,ILLEGAL,The Great Book,John Smith,available,Available
+4722989576265,ILLEGAL,The Great Book,John Smith,Fiction,Available
 1325781373623,ILLEGAL,History of Time,Alice Johnson,Education,Available
 6798837285,STANDARD,Mystery of the East,Jane Doe,Fiction,CheckedOut
 7334575071,STANDARD,Mystery of the East,John Smith,Mystery,Available
