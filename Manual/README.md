@@ -24,12 +24,15 @@
 ## Filter
 
 ### filter
-“filter” will show all library books in the filter
+“filter” will show all library books in sorted by author name.
 
 ### filter \<field>~=\<value>
-This will show all of the books that have equal fields to the value.
+This will show all the books that have equal fields to the value sorted by author name.
 
-The fields are as follows: “bookTitle”, “authorName”, “category”, or “isbn”
+The fields are as follows: “bookTitle”, “authorName”, “category”, or “isbn”.
+
+### filter clear
+This clears the filter.
 
 
 ## List
@@ -52,4 +55,7 @@ This checks out a book. If no ISBN is provided, it checks out all books in the l
 
 ### list checkin \<isbn>
 This checks in a book. If no ISBN is provided, it checks in all the books in the list. This will update the Library.csv file
+
+### exit
+"exit" terminates the program.
 
